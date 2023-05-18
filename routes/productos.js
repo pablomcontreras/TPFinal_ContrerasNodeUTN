@@ -1,14 +1,15 @@
+module.exports = router;
+
 var express = require("express");
 var router = express.Router();
-const producto = require('../Controller/productosController');
+const productosController = require("../Controller/productosController");
 
-router.get("/", function (req, res, next) {
-producto.getAll(req, res, next)});
+router.get("/", productosController.getAll);
 
+router.get("/:id", productosController.getById);
 
-router.post("/", function (req, res, next) {
-  producto.create(req,res,next);
-});
-
+router.post("/", productosController.create);
+router.put("/:id", productosController.modify);
+router.delete("/:id", productosController.delete);
 
 module.exports = router;

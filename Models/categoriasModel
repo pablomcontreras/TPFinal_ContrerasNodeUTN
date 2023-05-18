@@ -1,0 +1,8 @@
+const mongoose = require("../config/mongodb");
+
+const categoriasSchema = mongoose.Schema({
+  nombre: String,
+  descripcion: String
+});
+
+module.exports = mongoose.model("categorias", categoriasSchema);
