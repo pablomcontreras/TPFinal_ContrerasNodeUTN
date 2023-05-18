@@ -4,12 +4,36 @@ var express = require("express");
 var router = express.Router();
 const productosController = require("../Controller/productosController");
 
-router.get("/", productosController.getAll);
 
+// Obtener los Featured
+router.get("/", productosController.getFeatured);
+//Obtener todos
+router.get("/listado", productosController.getAll);
+//Obtener por id
 router.get("/:id", productosController.getById);
-
-router.post("/", productosController.create);
-router.put("/:id", productosController.modify);
-router.delete("/:id", productosController.delete);
+//Crear (solo autorizado para logueados)
+router.post(
+  "/",
+  (req, res, next) => {
+    req.app.verificarToken(req, res, next);
+  },
+  productosController.create
+);
+//Modificar (solo autorizado para logueados)
+router.put(
+  "/:id",
+  (req, res, next) => {
+    req.app.verificarToken(req, res, next);
+  },
+  productosController.modify
+);
+//Eliminar (solo autorizado para logueados)
+router.delete(
+  "/:id",
+  (req, res, next) => {
+    req.app.verificarToken(req, res, next);
+  },
+  productosController.delete
+);
 
 module.exports = router;

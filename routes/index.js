@@ -1,10 +1,9 @@
-var express = require('express');
-const productosController = require('../Controller/productosController');
+var express = require("express");
 var router = express.Router();
 
-// Get Featured
-router.get("/", productosController.getFeatured);
+/* GET home page. */
+router.get("/", function (req, res, next) {
+  res.render("index", { title: "TP Final Curso NodeJS UTN" });
+});
 
 module.exports = router;
-
-

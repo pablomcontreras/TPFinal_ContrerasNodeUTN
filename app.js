@@ -5,12 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usuariosRouter = require("./routes/usuarios");
 var productosRouter = require('./routes/productos');
-var registroRouter = require("./routes/registro");
-var loginRouter = require("./routes/login");
-
-
+var categoriasRouter = require("./routes/categorias")
+var jwt = require("jsonwebtoken");
 
 var app = express();
 
@@ -25,10 +23,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/productos', productosRouter);
-app.use("/registro", registroRouter);
-app.use("/login", loginRouter);
+app.use('/usuarios', usuariosRouter);
+app.use('/productos', verificarToken, productosRouter);
+app.use("/categorias", categoriasRouter);
 
 
 
@@ -44,9 +41,24 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  // render the error page 
+  res.status(400).json(err.message);
 });
+
+//verificar Token
+
+function verificarToken(req, res, next) {
+  jwt.verify(req.headers["x-access-token"], "1234567", function (error, payload) {
+    if (error) {
+      res.json({ message: error.message });
+    } else {
+      console.log("Payload:", payload);
+          next();
+    }
+
+   })
+}
+
+app.verificarToken = verificarToken;
 
 module.exports = app;
