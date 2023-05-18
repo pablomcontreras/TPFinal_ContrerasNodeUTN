@@ -17,8 +17,8 @@ module.exports = {
       const categoria = await categoriasModel.findById(req.params.id);
       res.status(200).json(categoria);
     } catch (e) {
-         console.log("Error: ", e);
-         next(e);
+      console.log("Error: ", e);
+      next(e);
     }
   },
   //esta funcion tiene implementado la posibilidad de agregar multiples registros en un mismo request
@@ -42,8 +42,7 @@ module.exports = {
       next(e);
     }
   },
-  //TENTATIVA DE MODIFICAR educacions
-
+  //Modificar cateogrias
   modify: async function (req, res, next) {
     try {
       await categoriasModel.updateOne({ _id: req.params.id }, req.body);
@@ -53,7 +52,7 @@ module.exports = {
       next(e);
     }
   },
-
+  //Eliminar Categorias
   delete: async function (req, res, next) {
     try {
       await productoModel.deleteOne({ _id: req.params.id });

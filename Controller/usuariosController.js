@@ -1,8 +1,9 @@
 const usuariosModel = require("../Models/usuariosModel");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
 module.exports = {
+    //Traer todos los usuarios
   getAll: async function (req, res, next) {
     try {
       const documents = await usuariosModel.find();
@@ -11,7 +12,8 @@ module.exports = {
       console.log("Error: ", e);
       next(e);
     }
-  },
+    },
+    //Crear Usuario
   create: async function (req, res, next) {
     try {
       console.log(req.body.name);
@@ -29,7 +31,7 @@ module.exports = {
       next(e);
     }
   },
-
+//Modificar Usuario
   modify: async function (req, res, next) {
     try {
       await productosModel.updateOne({ _id: req.params.id }, req.body);
@@ -39,7 +41,7 @@ module.exports = {
       next(e);
     }
   },
-
+//Eliminar Usuario
   delete: async function (req, res, next) {
     try {
       await usuariosModel.deleteOne({ _id: req.params.id });
@@ -48,23 +50,24 @@ module.exports = {
       console.log("Error: ", e);
       next(e);
     }
-  },
+    },
+  //Loguearse
   login: async function (req, res, next) {
     try {
-      const user = await usuariosModel.findOne({username:req.body.username});
+      const user = await usuariosModel.findOne({ username: req.body.username });
       if (!user) {
         res.status(401).json({ message: "El usuario no existe" });
-        };
-        //si la contraseña es la misma que la almacenada (encriptada) en la db, genero el token
-        if (bcrypt.compareSync(req.body.password,user.password)) {
-            const token = jwt.sign({ userId: user._id }, "1234567", { expiresIn: "1h" });
-            res.status(201).json({token})
-        } else {
-                   res.status(401).json({ message: "Contraseña incorrecta" });
-        }
-        
+      }
+      //si la contraseña es la misma que la almacenada (encriptada) en la db, genero el token
+      if (bcrypt.compareSync(req.body.password, user.password)) {
+        const token = jwt.sign({ userId: user._id }, "1234567", {
+          expiresIn: "1h",
+        });
+        res.status(201).json({ token });
+      } else {
+        res.status(401).json({ message: "Contraseña incorrecta" });
+      }
     } catch (e) {
-
       console.log("Error: ", e);
       next(e);
     }

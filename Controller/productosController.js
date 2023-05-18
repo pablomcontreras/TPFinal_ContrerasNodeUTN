@@ -34,7 +34,7 @@ module.exports = {
       next(e);
     }
   },
-  //esta funcion tiene implementado la posibilidad de agregar multiples registros en un mismo request
+  //Esta funcion tiene implementado la posibilidad de agregar multiples registros en un mismo request. Chequea si hay varios elementos o no.
   create: async function (req, res, next) {
     try {
       console.log(req.body);
