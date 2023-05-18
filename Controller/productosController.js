@@ -1,4 +1,4 @@
-const productosModel = require("../models/producto");
+const productosModel = require("../Models/productosModel");
 
 module.exports = {
   //Traer todos
@@ -41,7 +41,7 @@ module.exports = {
         featured: req.body.featured,
       });
       const producto = await productoNuevo.save();
-      res.status(201).send(producto);
+      res.status(201).send(productoNuevo);
     } catch (e) {
       console.log(e);
       res.status(400).json(e);
