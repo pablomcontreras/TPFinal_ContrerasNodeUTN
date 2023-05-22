@@ -48,7 +48,7 @@ app.use(function(err, req, res, next) {
 //verificar Token
 
 function verificarToken(req, res, next) {
-  jwt.verify(req.headers["x-access-token"], "1234567", function (error, payload) {
+  jwt.verify(req.body["x-access-token"], "1234567", function (error, payload) {
     if (error) {
       res.json({ message: error.message });
     } else {

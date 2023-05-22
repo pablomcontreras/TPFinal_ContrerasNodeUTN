@@ -34,7 +34,7 @@ module.exports = {
 //Modificar Usuario
   modify: async function (req, res, next) {
     try {
-      await productosModel.updateOne({ _id: req.params.id }, req.body);
+      await usuariosModel.updateOne({ _id: req.params.id }, req.body);
       res.status(201).send("Usuario Actualizado con éxito!");
     } catch (e) {
       console.log("Error: ", e);
